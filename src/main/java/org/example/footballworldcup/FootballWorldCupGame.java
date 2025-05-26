@@ -25,4 +25,8 @@ class FootballWorldCupGame extends Game {
         }
     }
 
+    @Override
+    public String toString() {
+        return homeTeamName + " " + homeTeamScore + " - " + awayTeamName + " " + awayTeamScore;
+    }
 }
