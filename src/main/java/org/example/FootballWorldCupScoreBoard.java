@@ -42,7 +42,8 @@ public class FootballWorldCupScoreBoard implements ScoreBoard {
     public void finishGame(String homeTeam, String awayTeam) {
         checkFinishGamePrerequisites(homeTeam, awayTeam);
 
-        games.removeIf(game -> game.homeTeamName.equals(homeTeam) && game.awayTeamName.equals(awayTeam));
+        games.removeIf(game -> game.homeTeamName.equalsIgnoreCase(homeTeam.trim())
+                && game.awayTeamName.equalsIgnoreCase(awayTeam.trim()));
     }
 
     private void checkFinishGamePrerequisites(String homeTeam, String awayTeam) {
@@ -61,7 +62,7 @@ public class FootballWorldCupScoreBoard implements ScoreBoard {
     }
 
     private boolean isTeamPlaying(String team) {
-        return games.stream().anyMatch(game -> StringUtils.equalsAnyIgnoreCase(team, game.getHomeTeamName(), game.getAwayTeamName()));
+        return games.stream().anyMatch(game -> StringUtils.equalsAnyIgnoreCase(team.trim(), game.getHomeTeamName(), game.getAwayTeamName()));
     }
 
     @Override
