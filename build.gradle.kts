@@ -19,3 +19,11 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+java {
+    withSourcesJar()
+}
+
+tasks.withType<JavaCompile> {
+    options.compilerArgs.add("-parameters")
+}
