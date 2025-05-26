@@ -1,6 +1,8 @@
-package org.example;
+package org.example.footballworldcup;
 
 import org.apache.commons.lang3.StringUtils;
+import org.example.Game;
+import org.example.ScoreBoard;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -42,8 +44,8 @@ public class FootballWorldCupScoreBoard implements ScoreBoard {
     public void finishGame(String homeTeam, String awayTeam) {
         checkFinishGamePrerequisites(homeTeam, awayTeam);
 
-        games.removeIf(game -> game.homeTeamName.equalsIgnoreCase(homeTeam.trim())
-                && game.awayTeamName.equalsIgnoreCase(awayTeam.trim()));
+        games.removeIf(game -> game.getHomeTeamName().equalsIgnoreCase(homeTeam.trim())
+                && game.getAwayTeamName().equalsIgnoreCase(awayTeam.trim()));
     }
 
     private void checkFinishGamePrerequisites(String homeTeam, String awayTeam) {

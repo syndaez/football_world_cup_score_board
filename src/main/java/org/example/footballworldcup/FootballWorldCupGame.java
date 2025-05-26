@@ -1,13 +1,15 @@
-package org.example;
+package org.example.footballworldcup;
 
-public class FootballWorldCupGame extends Game {
+import org.example.Game;
 
-    public FootballWorldCupGame(String homeTeamName, String awayTeamName) {
+class FootballWorldCupGame extends Game {
+
+    FootballWorldCupGame(String homeTeamName, String awayTeamName) {
         super(homeTeamName, awayTeamName);
     }
 
     @Override
-    void updateScore(int homeTeamScore, int awayTeamScore) {
+    public void updateScore(int homeTeamScore, int awayTeamScore) {
         checkUpdateScorePrerequisites(homeTeamScore, awayTeamScore);
 
         this.homeTeamScore = homeTeamScore;

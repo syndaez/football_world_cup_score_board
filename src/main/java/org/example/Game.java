@@ -1,6 +1,5 @@
 package org.example;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public abstract class Game {
@@ -19,7 +18,7 @@ public abstract class Game {
         this.addedDate = LocalDateTime.now();
     }
 
-    abstract void updateScore(int homeTeamScore, int awayTeamScore);
+    public abstract void updateScore(int homeTeamScore, int awayTeamScore);
 
     public String getHomeTeamName() {
         return homeTeamName;
