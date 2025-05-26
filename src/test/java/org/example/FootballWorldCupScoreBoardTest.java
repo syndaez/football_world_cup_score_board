@@ -54,7 +54,7 @@ class FootballWorldCupScoreBoardTest {
         String awayTeam = "Canada";
 
         // when
-        Game game = scoreBoard.startGame(homeTeam, awayTeam);
+        scoreBoard.startGame(homeTeam, awayTeam);
 
         // then
         Assertions.assertThrows(IllegalStateException.class, () -> scoreBoard.startGame(homeTeam, "Brazil"));
@@ -68,7 +68,7 @@ class FootballWorldCupScoreBoardTest {
         String awayTeam = "Canada";
 
         // when
-        Game game = scoreBoard.startGame(homeTeam, awayTeam);
+        scoreBoard.startGame(homeTeam, awayTeam);
 
         // then
         Assertions.assertThrows(IllegalStateException.class, () -> scoreBoard.startGame("Brazil", awayTeam));
