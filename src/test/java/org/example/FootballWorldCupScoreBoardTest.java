@@ -57,7 +57,9 @@ class FootballWorldCupScoreBoardTest {
         scoreBoard.startGame(homeTeam, awayTeam);
 
         // then
-        Assertions.assertThrows(IllegalStateException.class, () -> scoreBoard.startGame(homeTeam, "Brazil"));
+        Assertions.assertThrows(IllegalStateException.class, () -> scoreBoard.startGame("Mexico", "Brazil"));
+        Assertions.assertThrows(IllegalStateException.class, () -> scoreBoard.startGame(" Mexico ", "Brazil"));
+        Assertions.assertThrows(IllegalStateException.class, () -> scoreBoard.startGame("mexico", "Brazil"));
     }
 
     @Test
@@ -71,7 +73,24 @@ class FootballWorldCupScoreBoardTest {
         scoreBoard.startGame(homeTeam, awayTeam);
 
         // then
-        Assertions.assertThrows(IllegalStateException.class, () -> scoreBoard.startGame("Brazil", awayTeam));
+        Assertions.assertThrows(IllegalStateException.class, () -> scoreBoard.startGame("Brazil", "Canada"));
+        Assertions.assertThrows(IllegalStateException.class, () -> scoreBoard.startGame("Brazil", " Canada "));
+        Assertions.assertThrows(IllegalStateException.class, () -> scoreBoard.startGame("Brazil", "canada"));
+    }
+
+    @Test
+    void startGame_homeAndAwayTeamsWithLeadingAndTrailingWhiteSpaces_AreTrimmed() {
+        // given
+        ScoreBoard scoreBoard = new FootballWorldCupScoreBoard();
+        String homeTeam = " Mexico ";
+        String awayTeam = " Canada ";
+
+        // when
+        Game game = scoreBoard.startGame(homeTeam, awayTeam);
+
+        // then
+        Assertions.assertEquals("Mexico", game.getHomeTeamName(), "Home team name should be trimmed");
+        Assertions.assertEquals("Canada", game.getAwayTeamName(), "Away team name should be trimmed");
     }
 
     @Test
@@ -135,6 +154,24 @@ class FootballWorldCupScoreBoardTest {
         Assertions.assertTrue(summary.isEmpty());
     }
 
+    @Test
+    void finishGame_homeAndAwayTeamsWithWrongCaseOrLeadingTrailingWhiteSpaces_ShouldFinishGameProperly() {
+        // given
+        ScoreBoard scoreBoard = new FootballWorldCupScoreBoard();
+        String homeTeam = "Mexico";
+        String awayTeam = "Canada";
+        Game game = scoreBoard.startGame(homeTeam, awayTeam);
+
+        Assertions.assertNotNull(game, "Prerequisites failed");
+
+        // when
+        scoreBoard.finishGame(" mexico ", " canada ");
+
+        // then
+        List<Game> summary = scoreBoard.getSummaryOfGamesByTotalScore();
+        Assertions.assertTrue(summary.isEmpty());
+    }
+
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = "  ")
@@ -161,6 +198,8 @@ class FootballWorldCupScoreBoardTest {
         String homeTeam = "Mexico";
         String awayTeam = "Canada";
 
+        Assertions.assertThrows(IllegalStateException.class, () -> scoreBoard.finishGame(homeTeam, awayTeam));
+        Assertions.assertThrows(IllegalStateException.class, () -> scoreBoard.finishGame(homeTeam, awayTeam));
         Assertions.assertThrows(IllegalStateException.class, () -> scoreBoard.finishGame(homeTeam, awayTeam));
     }
 
